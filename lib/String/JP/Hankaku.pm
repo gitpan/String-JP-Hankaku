@@ -5,8 +5,9 @@ use strict;
 use Carp;
 use base qw(Exporter);
 
+our $VERSION = '0.0.2';
+
 our @EXPORT = qw(is_hankaku_katakana);
-our $VERSION = '0.0.1';
 
 sub is_hankaku_katakana {
     my $str = shift;
@@ -21,58 +22,60 @@ sub is_hankaku_katakana {
 1;
 __END__
 
+=encoding utf-8
+
 =head1 NAME
 
 String::Hankaku - judge that argument is hankaku-katakana or not
 
-
-=head1 VERSION
-
-This document describes String::Hankaku version 0.0.1
-
-
 =head1 SYNOPSIS
 
-package YourPackage;
-
-use strict;
-use warning;
-use String::Hankaku;
-use utf8;
-
-my $string = qw/aあｵ９波/;
-for (split //, $string) {
-    print encode_utf8($_), ": ";
-    print is_hankaku_katakana($_) ? "yes\n" : "no\n";
-}
+  package YourPackage;
   
-# a: no
-# あ: no
-# ｵ: yes
-# ９: no
-# 波: no
-
+  use strict;
+  use warning;
+  use String::JP::Hankaku;
+  use Encode qw(encode_utf8);
+  use utf8;
+  
+  my $string = qw/aあｴ９波ｦ/;
+  for (split //, $string) {
+      print encode_utf8($_), ": ";
+      print is_hankaku_katakana($_);
+  }
+    
+  # a: 0
+  # あ: 0
+  # ｴ: 1
+  # ９: 0
+  # 波: 0
+  # ｦ: 1
 
 =head1 DESCRIPTION
 
 This module is aim for checking easy that argument is hankaku-katakana or not. 
 
-I order only one method. is_hankaku_katakana method.
-If your character is hankaku-katakana, you will get "1".
-Or is not hankaku-katakana, you will get "0".
+Unicode block is very useful. 
+If we want to judge Japanese hankaku-katakana, we use \p{InHalfwidthAndFullwidthForms}.
+But, this unicode block contain zenkaku-number and so on.
 
+So, I make this module to easy judge hankaku-katakana.
 
 =head1 METHODS
 
 =head2 is_hankaku_katakana
+  
+  # return 1 or 0
+  is_hankaku_katakana($str);
 
-This method can judge that argument is hankaku-katakana or not.
-
+This method can judge argument is hankaku-katakana or not.
+Return value is 1 (hankaku-katakana) or 0 (not hankaku-katakana).
 
 =head1 AUTHOR
 
 sasata299  C<< <sasata299@livedoor.com> >>
 
+http://blog.livedoor.jp/sasata299/
 
 =head1 LICENCE AND COPYRIGHT
 
@@ -81,26 +84,4 @@ Copyright (c) 2009, sasata299 C<< <sasata299@livedoor.com> >>. All rights reserv
 This module is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself. See L<perlartistic>.
 
-
-=head1 DISCLAIMER OF WARRANTY
-
-BECAUSE THIS SOFTWARE IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY
-FOR THE SOFTWARE, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN
-OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES
-PROVIDE THE SOFTWARE "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
-EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE
-ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE SOFTWARE IS WITH
-YOU. SHOULD THE SOFTWARE PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL
-NECESSARY SERVICING, REPAIR, OR CORRECTION.
-
-IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
-WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR
-REDISTRIBUTE THE SOFTWARE AS PERMITTED BY THE ABOVE LICENCE, BE
-LIABLE TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL,
-OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE
-THE SOFTWARE (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING
-RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A
-FAILURE OF THE SOFTWARE TO OPERATE WITH ANY OTHER SOFTWARE), EVEN IF
-SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF
-SUCH DAMAGES.
+=cut
