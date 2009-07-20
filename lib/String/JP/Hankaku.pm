@@ -5,7 +5,7 @@ use strict;
 use Carp;
 use base qw(Exporter);
 
-our $VERSION = '0.0.2';
+our $VERSION = '0.0.3';
 
 our @EXPORT = qw(is_hankaku_katakana);
 
@@ -26,7 +26,7 @@ __END__
 
 =head1 NAME
 
-String::Hankaku - judge that argument is hankaku-katakana or not
+String::JP::Hankaku - judge that argument is hankaku-katakana or not
 
 =head1 SYNOPSIS
 
